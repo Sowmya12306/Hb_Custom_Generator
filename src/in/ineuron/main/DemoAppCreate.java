@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import in.ineuron.model.Employee;
+import in.ineuron.model.CustomGen;
 import in.ineuron.util.HibernateUtil;
 
 public class DemoAppCreate {
@@ -23,13 +23,10 @@ public class DemoAppCreate {
 			}
 			if(transaction!=null)
 			{
-			Employee emp = new Employee();
-//			emp.setEmpId(9);
-			emp.setEmpName("Surabhi");
-			emp.setEmpSal(10016.89);
-			Integer id = (Integer) session.save(emp);  // save method can be used with geneators for auto increment of id, it is serialzable, belongs to hibernate, This method give instructons to save the object and returns the generated value as return type to the application 
-//			 emp in L1-cache 
-		//	session.persist(emp); // this method return type is void, so does not support generated value concept, is JPA method implemented by hibernate, gives instruction to hibernte to perform save operation, doesn't allow to work with generators
+			CustomGen custom = new CustomGen();
+			custom.setEmpName("Prajwal");
+			custom.setSalary(34909.80);
+			String id = (String) session.save(custom);  
 			System.out.println("The id of the record is " + id) ;
 			flag = true;
 			}
@@ -40,7 +37,7 @@ public class DemoAppCreate {
 		}
 		finally {
 			if(flag ==true) {
-				transaction.commit(); // stored in DB through ORM
+				transaction.commit(); 
 			}
 			else transaction.rollback();
 			HibernateUtil.closeSession(session);
